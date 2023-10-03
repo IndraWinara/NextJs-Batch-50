@@ -39,8 +39,9 @@ export const isAuthenticate = CatchAsyncError(async (req: Request, res: Response
 
 export const authorizeRoles = (...roles : string[])=>{
     return (req : Request, res : Response, next : NextFunction)=>{
-        if (!roles.includes(req.user?.role || '')){
-            return next (new ErrorHandler(`Role : ${roles} tidak berhak mengakses data ini`,400))
+        if(!roles.includes(req.user?.role || '')){
+            return next (new ErrorHandler(`Role : ${req.user?.role} tidak berhak mengakses data ini`,400))
         }
+        next()
     }
 }

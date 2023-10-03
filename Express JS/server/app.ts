@@ -3,6 +3,8 @@ import cors from 'cors'
 import cookieParser from 'cookie-parser';
 import { ErrorMiddleware } from './middleware/error';
 import userRouter from './routes/user.route'
+import courseRouter from './routes/course.route';
+
 require('dotenv').config()
 export const app = express()
 require('express')
@@ -22,6 +24,7 @@ app.use(cors({
 
 //routes
 app.use('/api/v1',userRouter)
+app.use('/api/v1',courseRouter)
 
 //test api dulu gaes
 app.get('/test', (req: Request, res: Response, next: NextFunction) => {
@@ -29,8 +32,6 @@ app.get('/test', (req: Request, res: Response, next: NextFunction) => {
         message: 'success test api nya gae'
     })
 })
-
-
 
 
 //jika ada yang mau akses route not found
