@@ -4,6 +4,7 @@ import ErrorHandler from "../utils/ErrorHandler";
 import cloudinary from 'cloudinary'
 import { createCourse } from "../services/course.service";
 import CourseModel from "../models/course.model";
+import { redis } from "../utils/redis";
 
 
 
@@ -26,7 +27,7 @@ export const uploadCourse = CatchAsyncError(async (req: Request, res: Response, 
                 url: myCloud.secure_url
             }
         }
-        
+
         createCourse(data, res, next)
     } catch (error: any) {
         return next(new ErrorHandler(error.message, 500))
@@ -65,7 +66,69 @@ export const updateCourse = CatchAsyncError(async (req: Request, res: Response, 
             course
         })
 
-    } catch (error : any) {
-        return next (new ErrorHandler(error.message,400))
+    } catch (error: any) {
+        return next(new ErrorHandler(error.message, 400))
+    }
+})
+
+// Fungsi ambil informasi (get) course untuk yang belum Bayar (purchasing)
+
+export const getSingleCourse = CatchAsyncError(async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const courseId = req.params.id
+
+        // kita buat cache di redis untuk user yang hitting public api karena banyak yang akses agar tidak terjadi server down
+        const isCacheExist = await redis.get(courseId)
+        if (isCacheExist) {
+            const courseRedis = JSON.parse(isCacheExist)
+            //  console.log('hitting redis')
+            res.status(200).json({
+                success: true,
+                courseRedis
+            })
+        } else {
+            const courseDb = await CourseModel.findById(courseId).select("-courseData.videoUrl -courseData.suggestion -courseData.questions -courseData.links")
+            //  console.log('hitting mongodb')
+            await redis.set(courseId, JSON.stringify(courseDb))
+            res.status(200).json({
+                success: true,
+                courseDb
+            })
+        }
+
+
+    } catch (error: any) {
+        return next(new ErrorHandler(error.message, 400))
+    }
+})
+
+
+
+
+// Fungsi ambil informasi (get) semua course untuk yang belum Bayar (purchasing)
+
+export const getAllCourse = CatchAsyncError(async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        // kita buat cache di redis untuk user yang hitting public api karena banyak yang akses agar tidak terjadi server down
+        const isCacheExist = await redis.get("AllCourses")
+        if (isCacheExist) {
+            const courseRedis = JSON.parse(isCacheExist)
+            // console.log('hitting redis')
+            res.status(200).json({
+                success: true,
+                courseRedis
+            })
+        } else {
+            const courseDb = await CourseModel.find().select("-courseData.videoUrl -courseData.suggestion -courseData.questions -courseData.links")
+            // console.log('hitting Mongodb')
+            await redis.set("AllCourses", JSON.stringify(courseDb))
+            res.status(200).json({
+                success: true,
+                courseDb
+            })
+        }
+
+    } catch (error: any) {
+        return next(new ErrorHandler(error.message, 400))
     }
 })
