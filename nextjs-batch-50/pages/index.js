@@ -1,6 +1,6 @@
 import { Inter } from 'next/font/google';
-import Hero from '@/components/Hero';
-import Layout from '@/Layout';
+import LoginScreen from './login';
+import { ChakraProvider } from '@chakra-ui/react';
 
 
 const inter = Inter({
@@ -9,8 +9,8 @@ const inter = Inter({
 
 export default function Home() {
   return (
-    <Layout>
-      <Hero />
-    </Layout>
+    <ChakraProvider>
+      <LoginScreen />
+    </ChakraProvider>
   );
 }
