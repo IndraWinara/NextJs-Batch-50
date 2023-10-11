@@ -8,9 +8,27 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import BookmarkIcon from '@mui/icons-material/Bookmark';
 import SettingsIcon from '@mui/icons-material/Settings';
 import CallIcon from '@mui/icons-material/Call';
+import { useRouter } from 'next/router';
 
 const HidePanel = () => {
   const { isOpen, onOpen, onClose } = useDisclosure()
+  const router = useRouter()
+  const dummyData = {
+    name: "Indra Winara",
+    email: "winaraindra@gmail.com",
+    Job: "Fullstack Web Developer",
+    hobby: "Coding"
+  }
+
+  const handleClick = () => {
+    router.push({
+      pathname: '/users/indra',
+      query: {
+        data: JSON.stringify(dummyData)
+      }
+    })
+  }
+
   return (
     <>
       <Button onClick={onOpen}>
@@ -19,7 +37,16 @@ const HidePanel = () => {
       <Drawer placement='left' onClose={onClose} isOpen={isOpen}>
         <DrawerOverlay />
         <DrawerContent>
-          <DrawerHeader borderBottomWidth='1px'>User Account</DrawerHeader>
+          <DrawerHeader borderBottomWidth='1px'>
+            <div className='flex gap-5'>
+              <div className='' onClick={handleClick}>
+                <img src='https://th.bing.com/th/id/OIP.LxxxmUpHtSPeIGQBErCs7gAAAA?w=194&h=194&c=7&r=0&o=5&pid=1.7' alt='account' className='w-[70px] h-[70px] rounded-full border-[4px] hover:scale-105 duration-200 cursor-pointer' />
+              </div>
+              <div className='flex  justify-center items-center'>
+                <p>Indra Winara</p>
+              </div>
+            </div>
+          </DrawerHeader>
           <DrawerBody>
             <div className='text-[15px] font-bold h-[300px]'>
               <div className='flex items-center gap-5 p-2 hover:px-3 duration-300 hover:bg-gray-300 cursor-pointer'>
