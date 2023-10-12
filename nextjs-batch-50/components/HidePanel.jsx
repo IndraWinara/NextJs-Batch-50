@@ -13,19 +13,11 @@ import { useRouter } from 'next/router';
 const HidePanel = () => {
   const { isOpen, onOpen, onClose } = useDisclosure()
   const router = useRouter()
-  const dummyData = {
-    name: "Indra Winara",
-    email: "winaraindra@gmail.com",
-    Job: "Fullstack Web Developer",
-    hobby: "Coding"
-  }
+
 
   const handleClick = () => {
     router.push({
       pathname: '/users/indra',
-      query: {
-        data: JSON.stringify(dummyData)
-      }
     })
   }
 

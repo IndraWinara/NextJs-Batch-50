@@ -1,17 +1,35 @@
 import { useRouter } from 'next/router'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 
 const DetailUsers = () => {
   const router = useRouter()
-  const { data } = router?.query
-  const res = data ? JSON.parse(data) : null
+  const [data, setData] = useState()
+
+  const getUserInfo = async () => {
+    try {
+      const response = await fetch('/api/user', {
+        method: "GET",
+        headers: { "Content-Type": "application/json" }
+      })
+      const responseJSON = response.json()
+      return responseJSON
+    } catch (error) {
+      console.log({ error })
+    }
+  }
+  useEffect(() => {
+    getUserInfo().then((ress) => setData(ress))
+  }, [])
+
+  const ress = data?.data
+
 
 
   return (
     <div className='flex bg-white flex-col p-5 md:w-[500px] md:h-[400px] w-[300px] h-[400px] border-t-[4px] border-blue-500 border-[1px]  shadow-xl rounded-lg'>
       <div className='flex justify-between'>
-        <p className='text-center font-bold text-xl'>Hello ,{res.name} 😊</p>
+        <p className='text-center font-bold text-xl'>Hello , {ress?.name}😊</p>
         <button onClick={() => router.push('/home')}>
           <ArrowBackIosIcon className='text-sky-500 hover:scale-105 duration-300' sx={{ fontSize: 30 }} />
         </button>
@@ -19,10 +37,10 @@ const DetailUsers = () => {
       <div className='mt-5'>
         <p>This your personal information</p>
         <div className='p-2 first-letter:'>
-          <p>Username : {res.name}</p>
-          <p>Email : {res.email} </p>
-          <p>Job : {res.Job} </p>
-          <p>Hoby : {res.hobby} </p>
+          <p>Username : {ress?.name} </p>
+          <p>Email : {ress?.email}  </p>
+          <p>Job : {ress?.Job} </p>
+          <p>Hoby : {ress?.hobby} </p>
         </div>
       </div>
       <div className='h-full mt-5 flex justify-end items-end'>
