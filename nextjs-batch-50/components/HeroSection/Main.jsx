@@ -1,6 +1,7 @@
 import React from 'react'
 import PushPinIcon from '@mui/icons-material/PushPin';
 import RemoveRedEyeOutlinedIcon from '@mui/icons-material/RemoveRedEyeOutlined';
+import Image from 'next/image';
 
 
 const Main = () => {
@@ -21,7 +22,7 @@ const Main = () => {
           </div>
         </div>
         <div className=''>
-          <img src='https://seeklogo.com/images/N/next-js-icon-logo-EE302D5DBD-seeklogo.com.png' className='w-12 object-cover h-12 rounded-full shadow-xl' />
+          <Image src='https://seeklogo.com/images/N/next-js-icon-logo-EE302D5DBD-seeklogo.com.png' className='w-12 object-cover h-12 rounded-full shadow-xl' width={48} height={12} />
         </div>
       </div>
     </div>

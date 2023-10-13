@@ -1,12 +1,13 @@
 import React from 'react'
 import PeopleIcon from '@mui/icons-material/People';
+import Image from 'next/image';
 
 const Group = () => {
   return (
     <div className='flex gap-2 mb-6 hover:bg-gray-300 py-2 rounded-lg'>
       {/* icon group */}
       <div className='px-1'>
-        <img src='https://seeklogo.com/images/N/next-js-icon-logo-EE302D5DBD-seeklogo.com.png' className='w-12 object-cover h-12 rounded-full shadow-xl' />
+        <Image src='https://seeklogo.com/images/N/next-js-icon-logo-EE302D5DBD-seeklogo.com.png' className='w-12 object-cover h-12 rounded-full shadow-xl' width={48} height={48} />
       </div>
       {/* name group etc.. */}
       <div className='flex flex-col'>

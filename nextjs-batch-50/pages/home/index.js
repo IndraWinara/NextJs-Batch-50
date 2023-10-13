@@ -1,11 +1,14 @@
 import Layout from '@/Layout'
-import Hero from '@/components/Hero'
+import dynamic from 'next/dynamic'
 import React from 'react'
+const HeroIC = dynamic(() => import('@/components/Hero'), {
+  loading: () => <p className='text-4xl'>Loading....</p>,
+})
 
 const HomeScreen = () => {
   return (
     <Layout>
-      <Hero />
+      <HeroIC />
     </Layout>
   )
 }

@@ -2,6 +2,7 @@ import { Button, FormControl, FormHelperText, FormLabel, Input } from '@chakra-u
 import { useRouter } from 'next/router'
 import React, { useState } from 'react'
 import { loginImage } from '../../public/gambar.png'
+import Image from 'next/image'
 
 const LoginScreen = () => {
   const [email, setEmail] = useState('')
@@ -24,7 +25,7 @@ const LoginScreen = () => {
       <h1 className='text-2xl font-bold'>Welcome to Our best ChatBot App</h1>
       <div className='bg-sky-500 p-5 gap-5 flex justify-between h-[400px] w-[600px] rounded-xl  '>
         <div className='w-[400px]'>
-          <img src='https://i0.wp.com/www.techquintal.com/wp-content/uploads/2022/07/Virtual-Memory.jpg?resize=768%2C432&ssl=1' className='h-full object-cover rounded-full' alt='login image' />
+          <Image src='https://i0.wp.com/www.techquintal.com/wp-content/uploads/2022/07/Virtual-Memory.jpg?resize=768%2C432&ssl=1' className='h-full object-cover rounded-full' alt='login image' width={400} height={400} />
         </div>
         <form onSubmit={handleSubmit} className='w-full flex'>
           <FormControl isRequired className='flex flex-col justify-around'>

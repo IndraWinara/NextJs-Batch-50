@@ -44,7 +44,7 @@ const DetailUsers = () => {
         </div>
       </div>
       <div className='h-full mt-5 flex justify-end items-end'>
-        <button onClick={() => router.push('/')} className='bg-sky-300 font-bold h-14 hover:bg-white duration-200 md:w-full w-[100px] rounded-full border-[1px] border-sky-600'>Sign Out</button>
+        <button onClick={() => router.push('/').then(() => router.reload())} className='bg-sky-300 font-bold h-14 hover:bg-white duration-200 md:w-full w-[100px] rounded-full border-[1px] border-sky-600'>Sign Out</button>
       </div>
     </div>
   )
