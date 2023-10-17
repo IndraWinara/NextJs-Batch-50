@@ -10,6 +10,7 @@ import SettingsIcon from '@mui/icons-material/Settings';
 import CallIcon from '@mui/icons-material/Call';
 import { useRouter } from 'next/router';
 import Image from 'next/image';
+import Link from 'next/link';
 
 const HidePanel = () => {
   const { isOpen, onOpen, onClose } = useDisclosure()
@@ -52,7 +53,7 @@ const HidePanel = () => {
               </div>
               <div className='flex items-center gap-5 p-2 hover:px-3 duration-300 hover:bg-gray-300 cursor-pointer'>
                 <AccountCircleIcon />
-                <p className=''>Contacts</p>
+                <Link href='home/contacts' className=''>Contacts</Link>
               </div>
               <div className='flex items-center gap-5 p-2 hover:px-3 duration-300 hover:bg-gray-300 cursor-pointer'>
                 <CallIcon />
