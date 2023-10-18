@@ -17,7 +17,7 @@ const News = () => {
   const ress = news?.data
   return (
     <>
-      <HeaderNews add={false} />
+      <HeaderNews add={false} home={true} />
       <div className='flex gap-2  flex-wrap justify-center'>
         {
           ress?.map((item, index) => (

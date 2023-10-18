@@ -1,23 +1,23 @@
-import { useRouter } from "next/router";
-import { useState } from "react";
+import { useRouter } from 'next/router'
+import React, { useState } from 'react'
 
-const AddNews = () => {
-  const router = useRouter();
-  const [title, setTitle] = useState('');
-  const [description, setDescription] = useState('');
-  const data = { title, description }
-  console.log(data)
+const EditNews = ({ data }) => {
+  const [title, setTitle] = useState(data.data.title)
+  const [description, setDescription] = useState(data.data.description)
+  const dataUpdate = { title, description }
+  const router = useRouter()
+  const { id } = router.query
   const HandleSubmit = async (e) => {
     e.preventDefault()
     try {
       const response = await fetch(
-        "https://paace-f178cafcae7b.nevacloud.io/api/notes",
+        `https://paace-f178cafcae7b.nevacloud.io/api/notes/update/${id}`,
         {
-          method: "POST",
+          method: "PATCH",
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify(data),
+          body: JSON.stringify(dataUpdate),
         }
       );
       const result = await response.json();
@@ -25,8 +25,7 @@ const AddNews = () => {
         router.push("/news");
       }
     } catch (error) { console.log(error) }
-  };
-
+  }
   return (
     <>
       <form onSubmit={HandleSubmit}>
@@ -44,10 +43,12 @@ const AddNews = () => {
             onChange={(event) =>
               setDescription(event.target.value)} />
         </div>
-        <button type="submit" className="p-2 bg-sky-500 rounded">Create News</button>
+        <button type="submit" className="p-2 bg-sky-500 rounded">Update</button>
       </form>
     </>
   )
 }
 
-export default AddNews
+export default EditNews
+
+

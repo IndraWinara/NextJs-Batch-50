@@ -1,8 +1,26 @@
 import { Button, Card, CardBody, CardFooter, Heading, Image, Stack, Text } from '@chakra-ui/react'
+import { useRouter } from 'next/router'
 import React from 'react'
 
 const AllNews = ({ data }) => {
+  const router = useRouter()
+  const handleDelete = async (id) => {
+    try {
+      const response = await fetch(`https://paace-f178cafcae7b.nevacloud.io/api/notes/delete/${id}`, {
+        method: 'DELETE',
+        headers: {
+          "Content-Type": "application/json"
+        }
+      })
+      const result = await response.json();
+      if (result?.success) {
+        router.reload();
+      }
+    } catch (error) {
+      console.log(error)
+    }
 
+  }
   return (
     <Card
       direction={{ base: 'column', sm: 'row' }}
@@ -26,6 +44,10 @@ const AllNews = ({ data }) => {
             {data.description}
           </Text>
         </CardBody>
+        <div className='flex justify-between'>
+          <button onClick={() => router.push(`/news/${data.id}`)} className='p-1 rounded-lg bg-indigo-500'>update</button>
+          <button onClick={() => handleDelete(data.id)} className='p-1 rounded-lg bg-red-500'>delete</button>
+        </div>
       </Stack>
     </Card>
   )
