@@ -61,7 +61,7 @@ const HidePanel = () => {
               </div>
               <div className='flex items-center gap-5 p-2 hover:px-3 duration-300 hover:bg-gray-300 cursor-pointer'>
                 <BookmarkIcon />
-                <p className=''>Saved Messages</p>
+                <Link href='/news' className=''>CRUD</Link>
               </div>
               <div className='flex items-center gap-5 p-2 hover:px-3 duration-300 hover:bg-gray-300 cursor-pointer'>
                 <SettingsIcon />
