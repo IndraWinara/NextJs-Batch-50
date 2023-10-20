@@ -1,3 +1,4 @@
+import { useMutation } from '@/hooks/useMutation'
 import { useRouter } from 'next/router'
 import React, { useState } from 'react'
 
@@ -7,24 +8,32 @@ const EditNews = ({ data }) => {
   const dataUpdate = { title, description }
   const router = useRouter()
   const { id } = router.query
+  const { mutate } = useMutation()
   const HandleSubmit = async (e) => {
     e.preventDefault()
-    try {
-      const response = await fetch(
-        `https://paace-f178cafcae7b.nevacloud.io/api/notes/update/${id}`,
-        {
-          method: "PATCH",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(dataUpdate),
-        }
-      );
-      const result = await response.json();
-      if (result?.success) {
-        router.push("/news");
-      }
-    } catch (error) { console.log(error) }
+
+    const result = await mutate({ url: `https://paace-f178cafcae7b.nevacloud.io/api/notes/update/${id}`, method: "PATCH", payload: { title, description } })
+    if (result?.success) {
+      router.push("/news");
+    }
+
+
+    //   try {
+    //     const response = await fetch(
+    //       `https://paace-f178cafcae7b.nevacloud.io/api/notes/update/${id}`,
+    //       {
+    //         method: "PATCH",
+    //         headers: {
+    //           "Content-Type": "application/json",
+    //         },
+    //         body: JSON.stringify(dataUpdate),
+    //       }
+    //     );
+    //     const result = await response.json();
+    //     if (result?.success) {
+    //       router.push("/news");
+    //     }
+    //   } catch (error) { console.log(error) }
   }
   return (
     <>

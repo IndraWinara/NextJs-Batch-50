@@ -1,24 +1,32 @@
+import { useMutation } from '@/hooks/useMutation'
 import { Button, Card, CardBody, CardFooter, Heading, Image, Stack, Text } from '@chakra-ui/react'
 import { useRouter } from 'next/router'
 import React from 'react'
 
 const AllNews = ({ data }) => {
   const router = useRouter()
+  const { mutate } = useMutation()
   const handleDelete = async (id) => {
-    try {
-      const response = await fetch(`https://paace-f178cafcae7b.nevacloud.io/api/notes/delete/${id}`, {
-        method: 'DELETE',
-        headers: {
-          "Content-Type": "application/json"
-        }
-      })
-      const result = await response.json();
-      if (result?.success) {
-        router.reload();
-      }
-    } catch (error) {
-      console.log(error)
+
+    const result = await mutate({ url: `https://paace-f178cafcae7b.nevacloud.io/api/notes/delete/${id}`, method: "DELETE" })
+    if (result?.success) {
+      router.reload();
     }
+
+    // try {
+    //   const response = await fetch(`https://paace-f178cafcae7b.nevacloud.io/api/notes/delete/${id}`, {
+    //     method: 'DELETE',
+    //     headers: {
+    //       "Content-Type": "application/json"
+    //     }
+    //   })
+    //   const result = await response.json();
+    //   if (result?.success) {
+    //     router.reload();
+    //   }
+    // } catch (error) {
+    //   console.log(error)
+    // }
 
   }
   return (
