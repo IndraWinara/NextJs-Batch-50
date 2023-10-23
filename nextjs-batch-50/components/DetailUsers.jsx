@@ -1,6 +1,7 @@
 import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
+import Cookies from 'js-cookie';
 
 const DetailUsers = () => {
   const router = useRouter()
@@ -24,6 +25,10 @@ const DetailUsers = () => {
 
   const ress = data?.data
 
+  const handleSignOut = () => {
+    Cookies.remove('token')
+    router.push('/').then(() => router.reload())
+  }
 
 
   return (
@@ -44,7 +49,7 @@ const DetailUsers = () => {
         </div>
       </div>
       <div className='h-full mt-5 flex justify-end items-end'>
-        <button onClick={() => router.push('/').then(() => router.reload())} className='bg-sky-300 font-bold h-14 hover:bg-white duration-200 md:w-full w-[100px] rounded-full border-[1px] border-sky-600'>Sign Out</button>
+        <button onClick={handleSignOut} className='bg-sky-300 font-bold h-14 hover:bg-white duration-200 md:w-full w-[100px] rounded-full border-[1px] border-sky-600'>Sign Out</button>
       </div>
     </div>
   )

@@ -3,11 +3,12 @@ import { useRouter } from 'next/router'
 import React, { useState } from 'react'
 import { loginImage } from '../../public/gambar.png'
 import Image from 'next/image'
+import Cookies from 'js-cookie'
 
 const LoginScreen = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-
+  const fakeToken = "19238910hsdbsbcjdsbcjjhsdhjdsbf"
   const router = useRouter()
 
   const handleSubmit = (e) => {
@@ -16,6 +17,7 @@ const LoginScreen = () => {
       alert('fill the password and email')
       return
     }
+    Cookies.set('token', fakeToken, { expires: 3 })
     router.push('/home')
     setEmail('')
     setPassword('')
