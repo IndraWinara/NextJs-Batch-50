@@ -9,7 +9,6 @@ export default async function handler(req, res) {
   })
   const responseJSON = await response.json()
   res.status(200).json({
-    ...
-    responseJSON
+    ...responseJSON
   })
 }
