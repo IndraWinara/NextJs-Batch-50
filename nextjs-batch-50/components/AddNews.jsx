@@ -1,6 +1,8 @@
 import { useMutation } from "@/hooks/useMutation";
+import { sendRequest } from "@/utils/mutateSwr";
 import { useRouter } from "next/router";
 import { useState } from "react";
+import useSWRMutation from 'swr/mutation'
 
 const AddNews = () => {
   const router = useRouter();
@@ -8,33 +10,27 @@ const AddNews = () => {
   const [description, setDescription] = useState('');
   const dataInput = { title, description }
   const { mutate } = useMutation()
+  async function sendRequest(url, { arg }) {
+    return fetch(url, {
+      method: 'POST',
+      body: JSON.stringify(arg)
+    }).then(res => res.json())
+  }
+  const { trigger } = useSWRMutation("https://paace-f178cafcae7b.nevacloud.io/api/notes", sendRequest)
+
+
   const HandleSubmit = async (e) => {
     e.preventDefault()
-    //custom hooks
-    const result = await mutate({ url: "https://paace-f178cafcae7b.nevacloud.io/api/notes", payload: { title, description } })
-    if (result?.success) {
-      router.push("/news");
-    }
+
+    //SWR mutation
 
 
-    // manual fetch
+    console.log('testdata', await trigger({ arg: dataInput }))
 
-    // try {
-    //   const response = await fetch(
-    //     "https://paace-f178cafcae7b.nevacloud.io/api/notes",
-    //     {
-    //       method: "POST",
-    //       headers: {
-    //         "Content-Type": "application/json",
-    //       },
-    //       body: JSON.stringify(data),
-    //     }
-    //   );
-    //   const result = await response.json();
-    //   if (result?.success) {
-    //     router.push("/news");
-    //   }
-    // } catch (error) { console.log(error) }
+
+
+
+
   };
 
   return (
